@@ -1,0 +1,23 @@
+#input-container {
+    background-color: #252525;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.input-text {
+    font-size: 40px;
+    font-weight: 800;
+    color: #fff;
+}
+
+#colour-input {
+    height: 60px;
+    width: 300px;
+    background-color: #252525;
+    border: none;
+    text-align: center;
+}
+
+#hex-prefix {
+    margin-left: 10px;
+}
