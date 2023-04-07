@@ -1,23 +1,24 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-content: [
-    './index.html',
-    './src/**/*.{js,ts,jsx,tsx}',
+    content: [
+        './index.html',
+        './src/**/*.{js,ts,jsx,tsx}',
     ],
-  theme: {
-    fontFamily: {
-        'sans': ['Montserrat', 'Avenir', 'Helvetica', 'sans-serif']
+    theme: {
+        fontFamily: {
+            'sans': ['Montserrat', 'Avenir', 'Helvetica', 'sans-serif']
+        },
+        colors: {
+            'black': '#252525',
+            'white': '#FFFFFF'
+        },
+        extend: {
+            zIndex: {
+                'back': '-1',
+            }
+        },
     },
-    colors: {
-        'black': '#252525',
-        'white': '#FFFFFF'
-      },
-    extend: {
-        zIndex: {
-            'back': '-1',
-        }
-    },
-  },
-  plugins: [],
+    darkMode: 'class',
+    plugins: [],
 }
 
