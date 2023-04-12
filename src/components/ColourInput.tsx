@@ -1,14 +1,15 @@
-import { ChangeEvent, FormEvent, KeyboardEvent, useState } from "react"
+import { ChangeEvent, FormEvent, KeyboardEvent, useContext, useState } from "react"
 import { ArrowRight, Hash } from 'react-feather';
+import { GameContext } from "../GameContext";
+import { isColourHex } from "../utils/colourUtils";
 
-interface PropType {
-    setGuess: (guess: string) => void;
-    dark: boolean;
-}
+export default function Input() {
+    const { addGuess } = useContext(GameContext)
 
-export default function Input({ setGuess, dark }: PropType) {
     const [input, setInput] = useState<string>('')
-    const inputValid = input.length === 3 || input.length === 6
+    const formattedInput = '#' + input
+    const inputValid = isColourHex(formattedInput)
+
 
     function handleInput(event: ChangeEvent<HTMLInputElement>) {
         const hexRegex = /^[0-9A-Fa-f]{0,6}$/
@@ -26,9 +27,8 @@ export default function Input({ setGuess, dark }: PropType) {
 
     function handleSubmit(event: FormEvent) {    
         event.preventDefault();
-        const guessRegex = /^([0-9A-Fa-f]{3}){1,2}$/
-        if (guessRegex.test(input)) {
-            setGuess(input)
+        if (isColourHex(formattedInput)) {
+            addGuess(formattedInput)
             setInput('')
         }
     }

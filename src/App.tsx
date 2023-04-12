@@ -1,42 +1,27 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import ColourInput from './components/ColourInput'
 import LastGuess from './components/LastGuess'
+import { GameContext } from './GameContext'
+import { ThemeContext } from './ThemeContext'
+import { colourToHex } from './utils/colourUtils'
 
 export default function App() {
-    const [colourComponents, setColourComponents] = useState([0, 0, 0]) 
-    const [lastGuess, setLastGuess] = useState('')
+    const { guessList, goal, startGame } = useContext(GameContext)
+    const darkTheme = useContext(ThemeContext)
 
-    const darkTheme = colourComponents.reduce((acc, curr) => acc + curr) > (255 * 3) / 2
+    const goalHex = colourToHex(goal)
 
-    const colourHex = calcHexCode(colourComponents)
-
-    function calcHexCode(colourVals: number[]) {
-        const formatHex = (val: number) => val.toString(16).padStart(2, '0');
-        return colourVals.reduce((acc, curr) => acc + formatHex(curr), '#')
-    }
-
-    function startGame() {
-        const generateHexComponent = () => Math.floor(Math.random() * 255)
-        const r = generateHexComponent()
-        const g = generateHexComponent()
-        const b = generateHexComponent()
-
-        setColourComponents([r, g, b])
-    }
+    const lastGuess = guessList.at(-1)
 
     useEffect(() => {
         startGame()
     }, [])
 
-    function handleGuess(guess: string) {
-        setLastGuess(guess)
-    }
-
     return (
         <div className={(darkTheme ? "dark " : "") + "py-20 container h-full flex flex-col items-center justify-between"}>
-            <ColourInput setGuess={handleGuess} dark={darkTheme} />
-            <LastGuess guess={lastGuess} correct={colourComponents} dark={darkTheme} />
-            <div className="absolute top-0 w-full h-full z-back" style={{ backgroundColor: colourHex }}></div>
+            <ColourInput />
+            {lastGuess && <LastGuess lastGuess={lastGuess} />}
+            <div className="absolute top-0 w-full h-full z-back" style={{ backgroundColor: goalHex }}></div>
         </div>
     )
 }
