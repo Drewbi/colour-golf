@@ -20,7 +20,7 @@ export default function App() {
     return (
         <div className={(darkTheme ? "dark " : "") + "py-20 container h-full flex flex-col items-center justify-between"}>
             <ColourInput />
-            {lastGuess && <LastGuess lastGuess={lastGuess} />}
+            <Golf></Golf>
             <div className="absolute top-0 w-full h-full z-back" style={{ backgroundColor: goalHex }}></div>
         </div>
     )
