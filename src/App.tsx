@@ -1,4 +1,4 @@
-import { Fragment, useContext, useEffect, useState } from 'react'
+import { Fragment, useContext, useEffect } from 'react'
 import ColourInput from './components/ColourInput'
 import LastGuess from './components/LastGuess'
 import { GameContext } from './GameContext'
@@ -20,18 +20,23 @@ export default function App() {
     }, [])
 
     return (
-        <div className={(darkTheme ? "dark " : "") + "py-20 container h-full flex flex-col items-center gap-10"}>
+        <>
+            <div className={(darkTheme ? "dark " : "") + "py-20 container h-full flex flex-col items-center gap-10"}>
             {gameComplete 
                 ? <Results />
                 : lastGuess 
-                    ? <Fragment>
+                ? <Fragment>
                         <ColourInput />
                         <LastGuess lastGuess={lastGuess} />
                     </Fragment>
                     : <ColourInput />
-            }
-            <Golf></Golf>
+                }
+            </div>
             <div className="absolute top-0 w-full h-full z-back" style={{ backgroundColor: goalHex }}></div>
-        </div>
+            <div className="absolute top-0 w-full h-full z-back">
+                <Golf></Golf>
+            </div>
+                
+        </>
     )
 }
