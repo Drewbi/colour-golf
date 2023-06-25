@@ -1,5 +1,6 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { Vector3 } from 'three';
+import { GameContext } from './GameContext';
 
 interface PositionContextData {
     ballEndPosition: Vector3
@@ -24,9 +25,14 @@ type PositionProviderProps = {
 }
 
 const PositionProvider = ({ children }: PositionProviderProps) => {
+    const { guessList } = useContext(GameContext)
     const [ballEndPosition, setBallEndPosition] = useState<Vector3>(new Vector3())
     const [ballPosition, setBallPosition] = useState<Vector3>(new Vector3())
     const [goalPosition, setGoalPosition] = useState<Vector3>(new Vector3(10, 0, 8))
+
+    useEffect(() => {
+        console.log('updated')
+    }, [guessList])
 
     const contextValue: PositionContextData = {
         ballEndPosition,

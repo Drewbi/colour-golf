@@ -1,7 +1,7 @@
 import React, { createContext, useState } from 'react';
 import { ColourComponent, ColourHex, hexToColour } from './utils/colourUtils';
 
-const winMargin = 30
+const winMargin = 1
 
 const defaultColour: ColourComponent = {
     r: 10,

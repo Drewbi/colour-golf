@@ -13,9 +13,9 @@ export default function Ball({ position, colour, ...props }: BallProps) {
     const { camera, scene } = useThree()
     const ref = useRef<Mesh>(null!)
 
-    // useEffect(() => {
-    //     setBallEndPosition(goalPosition)
-    // }, [])
+    useEffect(() => {
+        setBallEndPosition(goalPosition)
+    }, [])
 
     useFrame(() => {
         const newVec = ballPosition.lerpVectors(ballPosition, ballEndPosition, 0.005)

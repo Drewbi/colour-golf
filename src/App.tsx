@@ -6,6 +6,7 @@ import { ThemeContext } from './ThemeContext'
 import { colourToHex } from './utils/colourUtils'
 import { Results } from './components/Results'
 import { Golf } from './components/Golf'
+import { Debug } from './components/Debug'
 
 export default function App() {
     const { guessList, goal, startGame, gameComplete } = useContext(GameContext)
@@ -33,10 +34,12 @@ export default function App() {
                 }
             </div>
             <div className="absolute top-0 w-full h-full z-back" style={{ backgroundColor: goalHex }}></div>
+            <div className="absolute bottom-0 right-0 w-64 h-64 z-back">
+                <Debug></Debug>
+            </div>
             <div className="absolute top-0 w-full h-full z-back">
                 <Golf></Golf>
             </div>
-                
         </>
     )
 }

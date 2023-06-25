@@ -10,7 +10,6 @@ export default function Input() {
     const formattedInput = '#' + input
     const inputValid = isColourHex(formattedInput)
 
-
     function handleInput(event: ChangeEvent<HTMLInputElement>) {
         const hexRegex = /^[0-9A-Fa-f]{0,6}$/
         const inputValue = event.target.value
