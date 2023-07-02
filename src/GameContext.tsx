@@ -1,12 +1,13 @@
 import React, { createContext, useState } from 'react';
 import { ColourComponent, ColourHex, hexToColour } from './utils/colourUtils';
+import { useControls } from 'leva';
 
 const winMargin = 1
 
 const defaultColour: ColourComponent = {
     r: 10,
-    b: 10,
     g: 10,
+    b: 10,
 }
 
 interface GameContextData {
@@ -31,10 +32,16 @@ type GameProviderProps = {
     children: React.ReactNode
 }
 
-const GameProvider = ({ children }: GameProviderProps) => {
+export const GameProvider = ({ children }: GameProviderProps) => {
     const [guessList, setGuessList] = useState<ColourHex[]>([])
-    const [goal, setGoal] = useState<ColourComponent>(defaultColour)
-    const [gameComplete, setGameComplete] = useState<boolean>(false)
+
+    const [{ goal, gameComplete }, set] = useControls(() => ({
+        goal: {...defaultColour},
+        gameComplete: false,
+    }))
+
+    const setGameComplete = (completed: boolean) => set({ gameComplete: completed })
+    const setGoal = (colour: ColourComponent) => set({ goal: {...colour} })
 
     const startGame = () => {
         setGameComplete(false)
@@ -81,5 +88,3 @@ const GameProvider = ({ children }: GameProviderProps) => {
         </GameContext.Provider>
     )
 }
-
-export default GameProvider

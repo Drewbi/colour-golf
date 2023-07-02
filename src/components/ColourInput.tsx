@@ -33,7 +33,7 @@ export default function Input() {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="flex items-center px-4 border-2 rounded overflow-hidden bg-white border-white focus-within:outline-black focus-within:border-black dark:bg-black dark:border-black dark:focus-within:outline-black dark:focus-within:border-black ">
+        <form onSubmit={handleSubmit} className="flex items-center px-4 border-2 rounded overflow-hidden bg-white border-white focus-within:outline-black focus-within:border-black dark:bg-black dark:border-black dark:focus-within:outline-white dark:focus-within:border-white">
             <Hash className="mx-1 text-black dark:text-white" size={36} strokeWidth={3} />
             <input
                 className="h-16 w-full bg-white dark:bg-black text-black dark:text-white text-center text-4xl font-extrabold outline-none"

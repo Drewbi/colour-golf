@@ -7,7 +7,7 @@ type ThemeProviderProps = {
     children: React.ReactNode;
 };
 
-const ThemeProvider = ({ children }: ThemeProviderProps) => {
+export const ThemeProvider = ({ children }: ThemeProviderProps) => {
     const { goal } = useContext(GameContext)
     const darkTheme = Object.values(goal).reduce((acc, curr) => acc + curr) > (255 * 3) / 2
 
@@ -18,5 +18,3 @@ const ThemeProvider = ({ children }: ThemeProviderProps) => {
     );
 
 }
-
-export default ThemeProvider
