@@ -41,7 +41,7 @@ export const GameProvider = ({ children }: GameProviderProps) => {
     }))
 
     const setGameComplete = (completed: boolean) => set({ gameComplete: completed })
-    const setGoal = (colour: ColourComponent) => set({ goal: {...colour} })
+    const setGoal = (colour: ColourComponent) => set({ goal: colour })
 
     const startGame = () => {
         setGameComplete(false)
@@ -61,9 +61,9 @@ export const GameProvider = ({ children }: GameProviderProps) => {
     const evalGuess = (guess: ColourHex): ColourComponent => {
         const guessComp = hexToColour(guess)
         return {
-            r: goal.r - guessComp.r,
-            g: goal.g - guessComp.g,
-            b: goal.b - guessComp.b,
+            r: Math.abs(goal.r - guessComp.r),
+            g: Math.abs(goal.g - guessComp.g),
+            b: Math.abs(goal.b - guessComp.b),
         }
     }
 

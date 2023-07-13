@@ -15,7 +15,7 @@ export function componentToHex(component: number) {
 }
 
 export function colourToHex({ r, g, b }: ColourComponent): ColourHex {
-    if ([r, g, b].some(val => !val || val < 0 || val > 255)) {
+    if ([r, g, b].some(val => typeof val !== 'number' || val < 0 || val > 255)) {
         throw new Error(`Invalid colour: (r: ${r} g: ${g} b: ${b})`)
     }
     

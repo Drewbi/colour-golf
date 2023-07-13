@@ -1,6 +1,3 @@
-import { useContext } from 'react'
-import { GameContext } from './GameContext'
-import { colourToHex } from './utils/colourUtils'
 import { Golf } from './components/Golf'
 import { Debug } from './components/Debug'
 import Interface from './components/Interface'
