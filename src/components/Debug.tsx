@@ -1,8 +1,13 @@
-import { OrbitControls } from "@react-three/drei";
-import { Canvas } from "@react-three/fiber";
+import { OrbitControls, Point, Points } from "@react-three/drei";
+import { Canvas, useLoader } from "@react-three/fiber";
 import { Leva, useControls } from "leva";
-import { useMemo, useRef } from "react";
-import { BufferAttribute, Mesh, PerspectiveCamera } from "three";
+import { useContext, useRef } from "react";
+import { Mesh, PerspectiveCamera, TextureLoader } from "three";
+import { GameContext } from "../GameContext";
+import { hexToColour } from "../utils/colourUtils";
+import goalImg from "../assets/dbug-flag.png"
+import ballImg from "../assets/dbug-ball.png"
+import nextImg from "../assets/dbug-next.png"
 
 export function Debug({ ...props }) {
     const [{ debug }, set] = useControls(() => ({ debug: false }))
@@ -35,7 +40,7 @@ function Visualisation({ ...props }) {
             {...props}
         >
             <Box />
-            <Points />
+            <Indicators />
             <OrbitControls
                 autoRotateSpeed={0.5}
                 autoRotate={true}
@@ -47,22 +52,57 @@ function Visualisation({ ...props }) {
     );
 }
 
-function Points() {
-    const points = useMemo(() => {
-        return new BufferAttribute(new Float32Array(new Array(9).fill(0).map((v) => (0.5 - Math.random()) * 255)), 3)
-    }, [])
+function Indicators() {
+    const { goal, guessList } = useContext(GameContext)
+    const nextGuess = guessList.at(-1)
+    const currentGuess = guessList.at(-2)
+    const nextGuessComp = hexToColour(nextGuess ? nextGuess : '#000')
+    const currentGuessComp = hexToColour(currentGuess ? currentGuess : '#000')
 
+    const goalIcon = useLoader(TextureLoader, goalImg);
+    const ballIcon = useLoader(TextureLoader, ballImg);
+    const nextIcon = useLoader(TextureLoader, nextImg);
+
+    const offset = 255 / 2
     return (
-        <points>
-            <bufferGeometry>
-                <bufferAttribute attach="attributes-position" {...points} />
-            </bufferGeometry>
-            <pointsMaterial
-                color={[255, 255, 255]}
-                size={20}
-                sizeAttenuation={true}
-            ></pointsMaterial>
-        </points>
+        <>
+            <Points limit={1} range={1000}>
+                <pointsMaterial
+                    map={goalIcon}
+                    color={[255, 255, 255]}
+                    size={50}
+                    sizeAttenuation
+                    transparent={false}
+                    alphaTest={0.5}
+                    opacity={1.0}
+                ></pointsMaterial>
+                <Point position={[goal.r - offset, goal.g - offset, goal.b - offset]} />
+            </Points>
+            <Points limit={1} range={1000}>
+                <pointsMaterial
+                    map={ballIcon}
+                    color={[255, 255, 255]}
+                    size={50}
+                    sizeAttenuation
+                    transparent={false}
+                    alphaTest={0.5}
+                    opacity={1.0}
+                ></pointsMaterial>
+                <Point position={[nextGuessComp.r - offset, nextGuessComp.g - offset, nextGuessComp.b - offset]} />
+            </Points>
+            <Points limit={1} range={1000}>
+                <pointsMaterial
+                    map={nextIcon}
+                    color={[255, 255, 255]}
+                    size={50}
+                    sizeAttenuation
+                    transparent={false}
+                    alphaTest={0.5}
+                    opacity={1.0}
+                ></pointsMaterial>
+                <Point position={[currentGuessComp.r - offset, currentGuessComp.g - offset, currentGuessComp.b - offset]} />
+            </Points>
+        </>
     )
 }
 
@@ -72,9 +112,9 @@ function Box() {
     const maxCoord = 128
 
     const lines = [
-        { colour: 0x6666aa, points: new Float32Array([minCoord, minCoord, maxCoord, maxCoord, minCoord, maxCoord])},
-        { colour: 0x66aa66, points: new Float32Array([minCoord, minCoord, maxCoord, minCoord, maxCoord, maxCoord])},
-        { colour: 0xaa6666, points: new Float32Array([minCoord, minCoord, maxCoord, minCoord, minCoord, minCoord])}
+        { colour: 0xaa6666, points: new Float32Array([maxCoord, minCoord, minCoord, minCoord, minCoord, minCoord])},
+        { colour: 0x66aa66, points: new Float32Array([minCoord, maxCoord, minCoord, minCoord, minCoord, minCoord])},
+        { colour: 0x6666aa, points: new Float32Array([minCoord, minCoord, maxCoord, minCoord, minCoord, minCoord])}
     ]
     
     return (

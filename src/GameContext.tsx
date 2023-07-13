@@ -2,7 +2,7 @@ import React, { createContext, useState } from 'react';
 import { ColourComponent, ColourHex, hexToColour } from './utils/colourUtils';
 import { useControls } from 'leva';
 
-const winMargin = 1
+const winMargin = 12
 
 const defaultColour: ColourComponent = {
     r: 10,
@@ -70,6 +70,7 @@ export const GameProvider = ({ children }: GameProviderProps) => {
     const addGuess = (guess: ColourHex) => {
         setGuessList([...guessList, guess]);
         const { r, g, b } = evalGuess(guess)
+        console.log(r,g,b)
         if (r < winMargin && g < winMargin && b < winMargin) completeGame()
     }
 
