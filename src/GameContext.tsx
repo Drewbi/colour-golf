@@ -14,6 +14,7 @@ interface GameContextData {
     guessList: ColourHex[]
     addGuess: (guess: ColourHex) => void
     goal: ColourComponent
+    gameStarted: boolean
     startGame: () => void
     gameComplete: boolean
     completeGame: () => void
@@ -23,6 +24,7 @@ export const GameContext = createContext<GameContextData>({
     guessList: [],
     addGuess: () => { },
     goal: defaultColour,
+    gameStarted: false,
     startGame: () => { },
     gameComplete: false,
     completeGame: () => { }
@@ -35,15 +37,18 @@ type GameProviderProps = {
 export const GameProvider = ({ children }: GameProviderProps) => {
     const [guessList, setGuessList] = useState<ColourHex[]>([])
 
-    const [{ goal, gameComplete }, set] = useControls(() => ({
+    const [{ goal, gameComplete, gameStarted }, set] = useControls(() => ({
         goal: {...defaultColour},
         gameComplete: false,
+        gameStarted: false,
     }))
 
     const setGameComplete = (completed: boolean) => set({ gameComplete: completed })
+    const setGameStarted = (started: boolean) => set({ gameStarted: started })
     const setGoal = (colour: ColourComponent) => set({ goal: colour })
 
     const startGame = () => {
+        setGameStarted(true)
         setGameComplete(false)
         const generateHexComponent = () => Math.floor(Math.random() * 255)
         const r = generateHexComponent()
@@ -55,6 +60,7 @@ export const GameProvider = ({ children }: GameProviderProps) => {
     }
 
     const completeGame = () => {
+        setGameStarted(false)
         setGameComplete(true)
     }
 
@@ -79,6 +85,7 @@ export const GameProvider = ({ children }: GameProviderProps) => {
         addGuess,
         goal,
         startGame,
+        gameStarted,
         gameComplete,
         completeGame
     }

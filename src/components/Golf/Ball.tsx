@@ -2,6 +2,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { Mesh, Vector3 } from "three";
 import { Object3DNode, useFrame, useThree } from "@react-three/fiber";
 import { PositionContext } from "../../PositionContext";
+import { GameContext } from "../../GameContext";
 
 interface BallProps extends Object3DNode<Mesh, typeof Mesh> {
     colour: string
@@ -9,13 +10,14 @@ interface BallProps extends Object3DNode<Mesh, typeof Mesh> {
 
 export default function Ball({ position, colour, ...props }: BallProps) {
     const [size, setSize] = useState(0.1)
+    const { gameStarted } = useContext(GameContext)
     const { goalPosition, ballPosition, setBallPosition, ballEndPosition, setBallEndPosition } = useContext(PositionContext)
     const { camera, scene } = useThree()
     const ref = useRef<Mesh>(null!)
 
     useEffect(() => {
-        setBallEndPosition(goalPosition)
-    }, [])
+        if(gameStarted) setBallEndPosition(goalPosition)
+    }, [gameStarted])
 
     useFrame(() => {
         const newVec = ballPosition.lerpVectors(ballPosition, ballEndPosition, 0.005)
