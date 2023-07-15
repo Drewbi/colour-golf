@@ -12,7 +12,7 @@ export default function Interface() {
     return (
         <>
             <div className={(darkTheme ? "dark " : "") + "py-20 container h-full flex flex-col items-center gap-10"}>
-                { gameComplete ? <Results /> : <Game /> }
+                { gameComplete ? <Results /> : gameStarted && <Game /> }
                 { !gameStarted && <button className='text-black dark:text-white bg-white dark:bg-black px-3 py-2 rounded' onClick={startGame}>
                     Start Game
                 </button>}

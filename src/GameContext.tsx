@@ -5,9 +5,9 @@ import { useControls } from 'leva';
 const winMargin = 12
 
 const defaultColour: ColourComponent = {
-    r: 10,
-    g: 10,
-    b: 10,
+    r: 30,
+    g: 30,
+    b: 30,
 }
 
 interface GameContextData {

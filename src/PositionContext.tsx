@@ -7,8 +7,6 @@ interface PositionContextData {
     setBallEndPosition: (position: Vector3) => void
     ballPosition: Vector3
     setBallPosition: (position: Vector3) => void
-    goalPosition: Vector3
-    setGoalPosition: (position: Vector3) => void
 }
 
 export const PositionContext = createContext<PositionContextData>({
@@ -16,8 +14,6 @@ export const PositionContext = createContext<PositionContextData>({
     setBallEndPosition: () => {},
     ballPosition: new Vector3(),
     setBallPosition: () => {},
-    goalPosition: new Vector3(),
-    setGoalPosition: () => {},
 })
 
 type PositionProviderProps = {
@@ -25,22 +21,27 @@ type PositionProviderProps = {
 }
 
 const PositionProvider = ({ children }: PositionProviderProps) => {
-    const { guessList } = useContext(GameContext)
-    const [ballEndPosition, setBallEndPosition] = useState<Vector3>(new Vector3())
-    const [ballPosition, setBallPosition] = useState<Vector3>(new Vector3())
-    const [goalPosition, setGoalPosition] = useState<Vector3>(new Vector3(10, 0, 8))
+    const { guessList, gameStarted } = useContext(GameContext)
+    const [ballEndPosition, setBallEndPosition] = useState<Vector3>(new Vector3(10, 0, 10))
+    const [ballPosition, setBallPosition] = useState<Vector3>(new Vector3(10, 0, 10))
 
     useEffect(() => {
-        console.log('updated')
+        console.log('Guessed: ' + guessList.at(-1))
     }, [guessList])
+
+    useEffect(() => {
+        console.log({ gameStarted })
+        if(gameStarted) {
+            setBallPosition(new Vector3(20, 0, 20))
+            setBallEndPosition(new Vector3(20, 0, 20))
+        }
+    }, [gameStarted])
 
     const contextValue: PositionContextData = {
         ballEndPosition,
         setBallEndPosition,
         ballPosition,
         setBallPosition,
-        goalPosition,
-        setGoalPosition
     }
 
     return (

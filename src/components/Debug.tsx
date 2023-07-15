@@ -80,7 +80,7 @@ function Indicators() {
             </Points>
             <Points limit={1} range={1000}>
                 <pointsMaterial
-                    map={ballIcon}
+                    map={nextIcon}
                     color={[255, 255, 255]}
                     size={50}
                     sizeAttenuation
@@ -92,7 +92,7 @@ function Indicators() {
             </Points>
             <Points limit={1} range={1000}>
                 <pointsMaterial
-                    map={nextIcon}
+                    map={ballIcon}
                     color={[255, 255, 255]}
                     size={50}
                     sizeAttenuation
