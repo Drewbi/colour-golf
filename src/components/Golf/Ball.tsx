@@ -19,16 +19,24 @@ export default function Ball({ position, colour, ...props }: BallProps) {
     const ref = useRef<Mesh>(null!)
 
     useEffect(() => {
+        console.log('ball', ref.current.position)
+        console.log('end', ballEndPosition)
+
+    }, [setBallPosition])
+
+    useEffect(() => {
         const goalPos = new Vector3(goal.r, goal.g, goal.b)
         if (guessList.length > 1) {
             const currGuess = hexToColour(guessList.at(-2)!)
             const nextGuess = hexToColour(guessList.at(-1)!)
             const ballPos = new Vector3(currGuess.r, currGuess.b, currGuess.g)
             const nextPos = new Vector3(nextGuess.r, nextGuess.b, nextGuess.g)
-            const ballEndPos = getNextBallPos(goalPos, ballPos, nextPos)
-            setBallEndPosition(new Vector3(ballEndPos.x, 0, ballEndPos.y))
-            console.log(ref.current.position)
-            console.log(new Vector3(ballEndPos.x, 0, ballEndPos.y))
+            try {
+                const ballEndPos = getNextBallPos(goalPos, ballPos, nextPos)
+                setBallEndPosition(new Vector3(ballEndPos.x, 0, ballEndPos.y))
+            } catch (error) {
+                console.log('Ball not moved:' + error)
+            }
         }
     }, [guessList])
 

@@ -78,7 +78,7 @@ function Indicators() {
                 ></pointsMaterial>
                 <Point position={[goal.r - offset, goal.g - offset, goal.b - offset]} />
             </Points>
-            <Points limit={1} range={1000}>
+            <Points limit={1} range={1000} visible={!!nextGuess}>
                 <pointsMaterial
                     map={nextIcon}
                     color={[255, 255, 255]}
@@ -90,7 +90,7 @@ function Indicators() {
                 ></pointsMaterial>
                 <Point position={[nextGuessComp.r - offset, nextGuessComp.g - offset, nextGuessComp.b - offset]} />
             </Points>
-            <Points limit={1} range={1000}>
+            <Points limit={1} range={1000} visible={!!currentGuess}>
                 <pointsMaterial
                     map={ballIcon}
                     color={[255, 255, 255]}
