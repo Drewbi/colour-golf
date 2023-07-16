@@ -2,8 +2,7 @@ import React, { createContext, useState } from 'react';
 import { ColourComponent, ColourHex, hexToColour } from './utils/colourUtils';
 import { useControls } from 'leva';
 
-// const winMargin = 12
-const winMargin = 1
+const winMargin = 12
 
 const defaultColour: ColourComponent = {
     r: 30,
